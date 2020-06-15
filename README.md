@@ -47,5 +47,9 @@ Visit above website for more information on Three.js
 You will find lots of other example.
 It was really fun try this Project 
 
+you can change and play with the background color and snake body color 
+by picking some color from this website.
+https://colorhunt.co/
+
 
 Happy Coding !!
