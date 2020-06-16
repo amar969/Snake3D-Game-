@@ -11,11 +11,28 @@
         margin: 0;
     }
     </style>
+    <link rel="stylesheet" href="main.css">
 </head>
-<body>
+<body style="background-color:#333333 ;">
+    <h3>Snake Speed Controller </h3>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+        <p><span id:"value">Low</span></p>
+      </div>
+    
+     
     <script src="./three.js"></script>
     <script src="./OrbitControls.js"></script>
     <script>
+
+        //slider
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("value");
+        
+
+        //
+
+        
         var WIDTH = window.innerWidth, HEIGHT = window.innerHeight;
         var aspectRatio = WIDTH / HEIGHT;
         var renderer = new THREE.WebGLRenderer(), camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.1, 1000), scene = new THREE.Scene();
@@ -29,16 +46,26 @@
         var cubeSize = edgeSize + (edgeSize - 1) * padding;
         var halfCubeSize = cubeSize/2;
 
-        var BACKGROUND_COLOR = 0x333333, BODY_COLOR = 0xc3f584, HEAD_COLOR = 0x527318, score = 0;
+        var BACKGROUND_COLOR = 0x654062, BODY_COLOR = 0xc3f584, HEAD_COLOR = 0x527318, score = 0;
 
         var lightPos = [new THREE.Vector3(0,50,20), new THREE.Vector3(0,15,-20), new THREE.Vector3(-20,15,20), new THREE.Vector3(20,-15,0)];
 
         var end = false, keysQueue = [];
 
         var snake = [], apple;
-        var cube = new THREE.BoxGeometry( 1, 1, 1 );
+        var cube = new THREE.SphereGeometry( 1, 1, 1 );
         var gameCube = new THREE.BoxGeometry( cubeSize, cubeSize, cubeSize );
         var direction = new THREE.Vector3(1, 0, 0);
+
+        var blackhole = new THREE.CircleGeometry( 2, 10 );
+        var material = new THREE.MeshBasicMaterial( { color: 0x222831 } );
+        var circle = new THREE.Mesh( blackhole, material );
+        scene.add( circle );
+
+        var blackhole1 = new THREE.CircleGeometry( 2, 10 );
+        var material = new THREE.MeshBasicMaterial( { color: 0x222831 } );
+        var circle = new THREE.Mesh( blackhole1, material );
+        scene.add( circle );
 
 
         scene.background = new THREE.Color( BACKGROUND_COLOR );
@@ -64,7 +91,10 @@
                 snake.push(new Cube( new THREE.Vector3((i + i * padding) -halfCubeSize + 0.5 , 0.5 + padding / 2, 0.5 + padding / 2 ), snakeCubeMaterial, scene));
             }
 
-            var appleCubeMaterial = new THREE.MeshPhongMaterial( { color: 0xc62828} );
+            
+
+
+            var appleCubeMaterial = new THREE.MeshBasicMaterial( { color: 0xc62828} );
             apple = new Cube(spawnAppleVector(), appleCubeMaterial, scene);
             var edgesMaterial = new THREE.LineBasicMaterial( { color: 0xffffff } );
             new Cube(new THREE.Vector3(0,0,0), edgesMaterial, scene, gameCube, true).setPosition(0,0,0);
@@ -73,7 +103,7 @@
             text.style.width = 200;
             text.style.height = 100;
             text.innerHTML = "Score: " + score;
-            text.style.top = 20 + "px";
+            text.style.bottom = 20 + "px";
             text.style.left = 20 + "px";
             text.style.fontSize = 50 + "px";
 
@@ -210,5 +240,6 @@
             }
         });
     </script>
+    
 </body>
 </html>
